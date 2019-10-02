@@ -1,0 +1,285 @@
+---
+title: "Drive change with big data"
+author: Professor Rob J Hyndman
+date: ""
+classoption: compress,aspectratio=169
+toc: false
+output:
+  binb::monash:
+    keep_tex: yes
+    includes:
+      in_header: preamble.tex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE, cache=TRUE, dev.args=list(bg=grey(0.9), pointsize=11))
+```
+
+```{r loadpackages}
+library(gridExtra)
+library(ggplot2)
+library(knitr)
+library(tidyverse)
+library(viridis)
+library(lubridate)
+library(tsibble)
+library(ggwordcloud)
+library(maps)
+library(gapminder)
+library(gganimate)
+```
+
+
+## Data is collected everywhere and at any time
+
+\begin{textblock}{7.8}(1,1.4)
+\begin{block}{}
+The ability to make data-driven decisions is crucial to any organization.
+\end{block}
+\end{textblock}
+
+\vspace*{1.8cm}
+
+```{r animation, cache = TRUE, fig.width=6, fig.height=4,fig.show='animate', interval=1/5,aniopts='loop,width=8.2cm'}
+#Modified from
+#https://gist.github.com/thomasp85/05169ad44ddcc8ed56da6ff7bf7fbe36
+
+anim <- gapminder %>%
+  ggplot(aes(x = gdpPercap, y=lifeExp, size = 3*pop, colour = country)) +
+  geom_point(show.legend = FALSE, alpha = 0.9) +
+  scale_color_viridis_d(option ="magma") +
+  scale_size(range = c(5, 20)) +
+  scale_x_log10() +
+  labs(title = 'Year: {frame_time}', x = 'GDP per capita', y = 'Life expectancy') +
+  transition_time(year) +
+  shadow_wake(wake_length = 0.15, size = 0.9,  alpha = FALSE)
+anim
+anim_save(filename ="figs/animation.png", animation=anim, device='png')
+```
+
+<!-- \begin{textblock}{18}(.3,3.2) -->
+<!-- \animategraphics[autoplay,loop,height=2.3in]{5}{./figs/animation}{1}{100} -->
+<!-- \end{textblock} -->
+
+\placefig{10}{1.35}{height=7.8cm, width=6.0cm}{data-never-sleeps}
+
+\begin{textblock}{6}(10.2,8.7)
+ \fontsize{7}{8}\sf\texttt{www.domo.com/learn/data-never-sleeps-7}
+\end{textblock}
+
+## A 10 year forecast
+
+\placefig{0}{1.35}{height=8.2cm}{hal-varian}
+
+\begin{textblock}{5.55}(10.3,1.1)\fontsize{13.5}{14}\sf
+\begin{alertblock}{Hal Varian, Chief~Economist, Google:}
+I keep saying the sexy job in the next ten years will be statisticians. People think I’m joking, but \dots\ the ability to take data---to be able to understand it, to process it, to extract value from it, to visualize it, to communicate it---that’s going to be a hugely important skill in the next decades.\hfill{\itshape (2009)}
+\end{alertblock}
+\end{textblock}
+
+## Best jobs in the world (2019)
+
+1. **Data Scientist** (19\% growth)
+2. **Statistician** (33\% growth)
+3. University Professor
+4. Occupational Therapist
+5. Genetic Counselor
+6. Medical Services Manager
+7. Information Security Analyst
+8. Mathematician
+9. Operations Research Analyst
+10. Actuary
+
+\only<2>{\begin{textblock}{6.3}(8.5,.3)\fontsize{13}{14}\sf
+\begin{block}{}
+\begin{itemize}
+\item Median salary US\$114K
+\item Strong sustained projected growth
+\item Good working environment, low stress, interesting problems
+\end{itemize}
+\end{block}
+\end{textblock}}
+
+\begin{textblock}{10}(5.4,8.4)
+\fontsize{9}{10}\sf\texttt{https://www.careercast.com/jobs-rated/best-jobs-of-2019}
+\end{textblock}
+
+\vspace*{4cm}
+
+## Why Business Analytics?
+\fontsize{15}{17}\sf
+
+**Organizations need to make:**
+
+\begin{itemize}
+ \item[\faPaperPlaneO] Informed decisions based on facts  \faAreaChart \pause
+ \item[\faPaperPlaneO] Facts are measured with data \faDownload \pause
+ \item[\faPaperPlaneO] Business analytics experts use statistical and computational
+methods to answer business relevant questions using data \faCogs \pause
+ \item[\faPaperPlaneO] Business analytic professionals are able to communicate findings
+to experts and broad audiences \faComments
+\end{itemize}
+
+## Master of Business Analytics \textrightarrow\ Starting 2020
+
+\begin{textblock}{5.9}(0.4,1.35)
+ \fontsize{13.2}{14.5}\sf
+   \begin{block}{}
+    \begin{itemize}\itemsep=7pt
+     \item[\faArrowRight]  Learn end-to-end analytics including data collection,
+     modeling, collaboration \& communication
+     \item[\faArrowRight]  Broad foundation: statistical thinking, probabilistic
+     modeling \& computational techniques
+     \item[\faArrowRight]  Social conscience, working for a better world
+    \end{itemize}
+   \end{block}
+\end{textblock}
+
+
+\placefig{6.2}{1.4}{width=10cm}{starwars-rey-rstats.png}
+
+\begin{textblock}{8}(13.2,8.7)\fontsize{7}{7}\sf
+Artwork by @allison\_horst
+\end{textblock}
+
+## &nbsp;
+
+\placefig{.5}{.2}{height=4.5cm}{RStudio-Ball}
+
+\begin{textblock}{8.5}(6.5,.5)\fontsize{13}{14}\sf
+\begin{block}{}
+\begin{itemize}\tightlist
+\item The leading statistical programming framework.
+\item Completely free and open-source
+\item Used by every major company in the world
+\item Supported by Microsoft, Google, Facebook, Amazon, etc
+\end{itemize}
+\end{block}
+\begin{block}{}
+\begin{itemize}\tightlist
+\item Monash instructors have written many widely used R packages
+\item Monash instructors are engaged with the international R community.
+\item Leading R developers visit Monash regularly.
+\end{itemize}
+\end{block}
+\end{textblock}
+
+\begin{textblock}{4.9}(.5,4.7)
+\begin{alertblock}{}
+Monash MBAT is the only masters course in the world based entirely around R and taught by leading R developers.
+\end{alertblock}
+\end{textblock}
+
+## Master of Business Analytics \textrightarrow\ Starting 2020
+
+\begin{textblock}{7}(8.6,1.35)
+\fontsize{14}{16}\sf
+\begin{alertblock}{}
+\begin{itemize}\tightlist
+\item Taught by internationally renowned researchers.
+\item Cutting edge, focusing on problem solving and hands-on experience.
+\item Focus on wild data, real problems. We regularly advise industry and government.
+\item Fiercely independent: we only teach open-source software.
+\end{itemize}
+\end{alertblock}
+\end{textblock}
+
+\placefig{.2}{1.4}{width=8.25cm}{welcome_to_rstats_twitter.png}
+
+\begin{textblock}{8}(0.2,8.7)\fontsize{7}{7}\sf
+Artwork by @allison\_horst
+\end{textblock}
+
+
+## MBAT users profile
+\fontsize{15}{17}\sf
+
+\begin{itemize}
+ \item[\faChevronRight] At least \textbf{\color{blue1}{one unit of undergraduate statistics}}.\pause
+ \item[\faChevronRight] An \textbf{\color{blue1}{interest}} in using \textbf{\color{blue1}{data}}
+  to solve problems and uncover truths.\pause
+ \item[\faChevronRight] A combination of \textbf{\color{blue1}{ curiosity in quantitative  and computational
+  methods}} with a \textbf{\color{blue1}{desire}} to make a difference.\pause
+ \item[\faChevronRight] An \textbf{\color{blue1}{undergraduate degree}} that has sparked your interest to work
+ with data to answer real life questions.
+\end{itemize}
+
+## \faUniversity\quad MBAT Units
+
+\begin{block}{A: Advanced preparatory studies (24 credit points)}
+ \begin{itemize}
+  \item  ETC5510: Introduction to data analysis
+  \item  ETC5242: Statistical thinking
+  \item  ETC5250: Introduction to machine learning
+  \item  ETC5550: Applied forecasting
+ \end{itemize}
+\end{block}
+\faArrowRight \hphantom{} Depending on prior qualifications, credits might be received for (A)
+
+\faArrowRight \hphantom{} All students will complete (B) and (C)
+
+## \faUniversity\quad MBAT Units
+
+\begin{block}{B: Mastery knowledge (48 credit points)}
+ \begin{itemize}\itemsep=2pt
+  \item  ETC5512: Wild-caught data
+  \item  ETC5513: Collaborative and reproducible practices
+  \item  ETC5521: Exploratory data analysis
+  \item  ETC5523: Data story-telling
+  \item  ETF5500: High dimensional data analysis
+  \item  ETC5555: Statistical machine learning
+  \item  ETC5580: Advanced statistical modelling
+  \item  ETC5543: Business analytics creative activity\\
+  (12 points internship or research project)
+ \end{itemize}
+\end{block}
+
+## \faUniversity\quad MBAT Units
+
+\begin{block}{C: Application studies (24 credit points)}
+\textbf{Four elective units}
+ \begin{itemize}\itemsep=2pt
+  \item FIT9133 Programming foundations in Python
+  \item FIT5205 Data in society
+  \item FIT9132 Introduction to databases
+  \item MAT9004 Mathematical foundations for data science
+  \item ETC5410 Bayesian time series econometrics
+  \item FIT5147 Data exploration and visualisation
+  \item ETC5555 Statistical machine learning
+  \item FIT5212 Data analysis for semi-structured data
+ \end{itemize}
+\end{block}
+
+
+## \faGraduationCap\quad MBAT: A World full of opportunities
+
+\begin{block}{}
+  \begin{itemize}
+  \item \textbf{\color{blue1}{Location and duration:}} 1.5 or 2 years full time
+          or 3 or 4 years part time @ Monash Clayton.
+   \item \textbf{\color{blue1}{Applications}} for our Semester 1 intake (February 2020) are now open (including a candidate statement).
+   \item \textbf{\color{blue1}{Entry requirements:}} Australian bachelor's degree or an equivalent qualification
+    with a weighted average mark (WAM) of 65, or equivalent
+    GPA as determined by the School.
+  \end{itemize}
+\end{block}
+
+
+
+##
+
+\placefig{-0.01}{-0.01}{width=1.01\paperwidth,height=\paperheight}{ana-bg-2-rect}
+
+\begin{textblock}{12}(.4,.2)
+ \color{white}{\fontsize{17}{17}\texttt{monash.edu/business/master-of-business-analytics}}
+\end{textblock}
+
+\begin{textblock}{7.5}(.5,4.5)\fontsize{28}{30}\sf\bfseries\color{white}\raggedright\par
+  Many thanks!\\[1cm]
+  Questions?
+\end{textblock}
+
+
+
+
+
