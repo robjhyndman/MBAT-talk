@@ -225,7 +225,7 @@ Artwork by @allison\_horst
   \item  ETC5512: Wild-caught data
   \item  ETC5513: Collaborative and reproducible practices
   \item  ETC5521: Exploratory data analysis
-  \item  ETC5523: Data story-telling
+  \item  ETC5523: Communicating with data
   \item  ETF5500: High dimensional data analysis
   \item  ETC5555: Statistical machine learning
   \item  ETC5580: Advanced statistical modelling
