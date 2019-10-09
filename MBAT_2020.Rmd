@@ -23,8 +23,6 @@ library(tidyverse)
 library(viridis)
 library(lubridate)
 library(tsibble)
-library(ggwordcloud)
-library(maps)
 library(gapminder)
 library(gganimate)
 ```
