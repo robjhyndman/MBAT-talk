@@ -38,7 +38,7 @@ The ability to make data-driven decisions is crucial to any organization.
 
 \vspace*{1.8cm}
 
-```{r animation, cache = TRUE, fig.width=6, fig.height=4,fig.show='animate', interval=1/5,aniopts='loop,width=8.2cm'}
+```{r animation, cache = TRUE, fig.width=6, fig.height=4,fig.show='animate', interval=1/8,aniopts='loop,width=8.2cm,autoplay'}
 #Modified from
 #https://gist.github.com/thomasp85/05169ad44ddcc8ed56da6ff7bf7fbe36
 
