@@ -1,6 +1,6 @@
 ---
 title: "Drive change with big data"
-author: Professor Rob J Hyndman
+author: Dr Nick Tierney
 date: ""
 classoption: compress,aspectratio=169
 toc: false
